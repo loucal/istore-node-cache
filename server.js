@@ -44,7 +44,9 @@ router.map(function () {
 			var itunesJson = JSON.parse(jsonString)
    			db.open(function(err, db) {
 				db.collection('itunes', function(err, collection) {
-					collection.insert(itunesJson);
+				  for(var x in itunesJson.results) {
+				    collection.insert(itunesJson.results[x]);
+				  }
 				});
 			});
 			resp.send(200, {}, itunesJson);
