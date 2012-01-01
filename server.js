@@ -55,7 +55,7 @@ mongo.open(function(err, db) {
 								    collection.insert(itunesJson.results[x]);
 								  }
 								});
-								resp.send(200, {}, itunesJson);
+								resp.send(200, {}, itunesJson.results);
 							  });
 							});
 				  	        req.end();
