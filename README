@@ -2,8 +2,6 @@ This is currently incomplete.
 
 Features
 +MongoDB store of JSON from apple store API
-
-Unimplemented
--'Cache' behavior as in checking the db before going to the apple servers
++'Cache' behavior as in checking the db before going to the apple servers
 
 useful for large websites that want to satisfy the terms of service of the API
