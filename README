@@ -1,0 +1,7 @@
+This is currently incomplete.
+
+Features
++MongoDB store of documents
+
+Unimplemented
+-'Cache' behavior as in checking the db before going to the apple servers
