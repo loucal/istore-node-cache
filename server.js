@@ -25,11 +25,11 @@ mongo.open(function(err, db) {
     });
     this.get('/ac').bind(function (req, resp, data) {
       if(data.term){
-        console.log(data.term);
+        searchTerm = data.term.replace(" ", "+");
         var iTunesOptions = {
           host: 'itunes.apple.com',
           port: 80,
-          path: '/search?term=' + data.term + '&entity=musicArtist&attribute=artistTerm&limit=5'
+          path: '/search?term=' + searchTerm + '&entity=musicArtist&attribute=artistTerm&limit=5'
         };
         var jsonResults;
         db.collection('itunes', function(err, collection) {
