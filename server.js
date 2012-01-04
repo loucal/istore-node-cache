@@ -23,9 +23,9 @@ mongo.open(function(err, db) {
         res.send(200, {}, {});
       });
     });
-    this.get('/ac').bind(function (req, resp, data) {
+    this.get('/artist').bind(function (req, resp, data) {
       if(data.term){
-        searchTerm = data.term.replace(" ", "+");
+        searchTerm = data.term.replace(" ", "+", "g");
         var iTunesOptions = {
           host: 'itunes.apple.com',
           port: 80,
@@ -33,7 +33,7 @@ mongo.open(function(err, db) {
         };
         var jsonResults;
         db.collection('itunes', function(err, collection) {
-          collection.find({artistName:new RegExp(data.term,"i")}, function(err, cursor) {
+          collection.find({_id:data.term.toLowerCase()}, function(err, cursor) {
             cursor.toArray(function(err,docs) {
               if(docs.length > 0) {
                 resp.send(200,{},docs)
@@ -52,6 +52,7 @@ mongo.open(function(err, db) {
                     var itunesJson = JSON.parse(jsonString)
                     db.collection('itunes', function(err, collection) {
                       for(var x in itunesJson.results) {
+												itunesJson.results[x]._id = itunesJson.results[x].artistName.toLowerCase()
                         collection.insert(itunesJson.results[x]);
                       }
                     });
@@ -69,13 +70,13 @@ mongo.open(function(err, db) {
     });
   });
 
-  require('http').createServer(function (request, response) {
+  require('http').createServer(function(request, response) {
     var body = "";
 
-    request.addListener('data', function (chunk) { body += chunk });
-    request.addListener('end', function () {
+    request.addListener('data', function(chunk) { body += chunk });
+    request.addListener('end', function() {
 
-      router.handle(request, body, function (result) {
+      router.handle(request, body, function(result) {
         response.writeHead(result.status, result.headers);
         response.end(result.body);
       });
