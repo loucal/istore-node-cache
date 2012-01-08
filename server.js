@@ -52,7 +52,7 @@ mongo.open(function(err, db) {
                     var itunesJson = JSON.parse(jsonString)
                     db.collection('itunes', function(err, collection) {
                       for(var x in itunesJson.results) {
-												itunesJson.results[x]._id = itunesJson.results[x].artistName.toLowerCase()
+                        itunesJson.results[x]._id = itunesJson.results[x].artistName.toLowerCase()
                         collection.insert(itunesJson.results[x]);
                       }
                     });
